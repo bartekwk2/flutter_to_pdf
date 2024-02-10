@@ -23,7 +23,7 @@ extension TextStyleConverter on TextStyle {
   pw.TextStyle toPdfTextStyle() => pw.TextStyle(
         color: color?.toPdfColor(),
         fontSize: fontSize,
-        fontStyle: fontStyle?.toPdfFontStyle(),
+        fontStyle: fontStyle?.toPdfFontStyle() ?? FontStyle.normal,
         fontWeight: fontWeight?.toPdfFontWeight(),
         height: height,
         letterSpacing: letterSpacing,
@@ -106,6 +106,10 @@ extension FontStyleConverter on FontStyle {
         return pw.FontStyle.normal;
       case FontStyle.italic:
         return pw.FontStyle.italic;
+      default:
+        debugPrint(
+            'Unsupported FontStyle: $this; defaulting to FontWeight.normal');
+        return pw.FontStyle.normal;
     }
   }
 }
@@ -115,16 +119,12 @@ extension FontWeightConverter on FontWeight {
     switch (this) {
       case FontWeight.normal:
         return pw.FontWeight.normal;
-      case FontWeight.w500:
-        return pw.FontWeight.w500;
-      case FontWeight.w600:
-        return pw.FontWeight.w600;
       case FontWeight.bold:
         return pw.FontWeight.bold;
       default:
         debugPrint(
-            'Unsupported FontWeight: $this; defaulting to FontWeight.normal');
-        return pw.FontWeight.normal;
+            'Unsupported FontWeight: $this; defaulting to FontWeight.bold');
+        return pw.FontWeight.bold;
     }
   }
 }
